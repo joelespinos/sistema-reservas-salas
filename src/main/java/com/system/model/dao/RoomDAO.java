@@ -4,6 +4,7 @@ import com.system.model.pojo.Room;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public interface RoomDAO {
 
@@ -13,7 +14,7 @@ public interface RoomDAO {
 
     boolean updateInfoRoom(Room roomToUpdate) throws SQLException;
 
-    Room getRoomById(int roomId) throws SQLException;
+    Optional<Room> getRoomById(int roomId) throws SQLException;
 
     ArrayList<Room> getAllRooms() throws SQLException;
 }

@@ -24,6 +24,14 @@ public class Room {
         this.resources = resources;
     }
 
+    // Constructor parametrizado sin id para inserts
+    public Room(String name, int capacity, String resources) {
+        this.roomId = 0;
+        this.name = name;
+        this.capacity = capacity;
+        this.resources = resources;
+    }
+
     // Constructor copia
     public Room(Room other) {
         this.roomId = other.roomId;
@@ -86,11 +94,8 @@ public class Room {
     // toString
     @Override
     public String toString() {
-        return "Room{" +
-                "roomId=" + roomId +
-                ", name='" + name + '\'' +
-                ", capacity=" + capacity +
-                ", resources='" + resources + '\'' +
-                '}';
+        return "Sala: " + name + " - ID: " + roomId + "\n" +
+                "Capacidad: " + capacity + " personas\n" +
+                "Recursos disponibles: " + resources + "\n";
     }
 }

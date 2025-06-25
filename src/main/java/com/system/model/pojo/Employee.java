@@ -36,6 +36,18 @@ public class Employee {
         this.department = department;
     }
 
+    // Constructor parametrizado sin id para inserts
+    public Employee(String dni, String firstName, String lastName1, String lastName2, String phoneNumber, String email, String department) {
+        this.employeeId = 0;
+        this.dni = dni;
+        this.firstName = firstName;
+        this.lastName1 = lastName1;
+        this.lastName2 = lastName2;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.department = department;
+    }
+
     // Constructor copia
     public Employee(Employee other) {
         this.employeeId = other.employeeId;
