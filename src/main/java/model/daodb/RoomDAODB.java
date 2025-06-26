@@ -1,8 +1,8 @@
-package com.system.model.daodb;
+package model.daodb;
 
-import com.system.model.dao.RoomDAO;
-import com.system.model.pojo.Room;
-import com.system.utils.DAODBConstants;
+import model.dao.RoomDAO;
+import model.pojo.Room;
+import utils.DAODBConstants;
 
 import java.sql.*;
 import java.util.ArrayList;

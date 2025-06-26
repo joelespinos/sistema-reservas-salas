@@ -1,11 +1,12 @@
-package com.system.model.daodb;
+package model.daodb;
 
-import com.system.model.dao.EmployeeDAO;
-import com.system.model.pojo.Employee;
-import com.system.utils.DAODBConstants;
+import model.dao.EmployeeDAO;
+import model.pojo.Employee;
+import utils.DAODBConstants;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class EmployeeDAODB implements EmployeeDAO {
     private static final int NON_ROWS_AFFECTED = 0;
@@ -65,8 +66,8 @@ public class EmployeeDAODB implements EmployeeDAO {
     }
 
     @Override
-    public Employee getEmployeeById(int employeeId) throws SQLException {
-        Employee employee = null;
+    public Optional<Employee> getEmployeeById(int employeeId) throws SQLException {
+        Optional<Employee> employeeOptional = Optional.empty();
         String sqlSentence = "SELECT * FROM Employee WHERE Employee_id = ?";
         try (Connection conn = DriverManager.getConnection(DAODBConstants.URL, DAODBConstants.USER, DAODBConstants.PASSWD);
              PreparedStatement psSelect = conn.prepareStatement(sqlSentence)) {
@@ -75,7 +76,7 @@ public class EmployeeDAODB implements EmployeeDAO {
             ResultSet rs = psSelect.executeQuery();
 
             if (rs.next()) {
-                employee = new Employee(
+                Employee employee = new Employee(
                         rs.getInt("Employee_id"),
                         rs.getString("DNI"),
                         rs.getString("First_name"),
@@ -85,9 +86,10 @@ public class EmployeeDAODB implements EmployeeDAO {
                         rs.getString("Email"),
                         rs.getString("Department")
                 );
+                employeeOptional = Optional.of(employee);
             }
         }
-        return employee;
+        return employeeOptional;
     }
 
     @Override

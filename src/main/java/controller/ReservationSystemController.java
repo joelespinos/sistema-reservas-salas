@@ -1,10 +1,10 @@
-package com.system.controller;
+package controller;
 
-import com.system.model.daodb.EmployeeDAODB;
-import com.system.model.daodb.RoomDAODB;
-import com.system.model.pojo.Room;
-import com.system.model.pojo.Employee;
-import com.system.utils.DAODBConstants;
+import model.daodb.EmployeeDAODB;
+import model.daodb.RoomDAODB;
+import model.pojo.Room;
+import model.pojo.Employee;
+import utils.DAODBConstants;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,8 +41,12 @@ public class ReservationSystemController {
         return roomManager.getAllRooms();
     }
 
-    public Optional<Room> getRoomById(int roomId) throws SQLException {
-        return roomManager.getRoomById(roomId);
+    public boolean doesRoomExist(int roomId) throws SQLException {
+        return roomManager.getRoomById(roomId).isPresent();
+    }
+
+    public Room getRoomById(int roomId) throws SQLException {
+        return roomManager.getRoomById(roomId).get();
     }
 
     // Métodos para Employee
@@ -62,7 +66,11 @@ public class ReservationSystemController {
     }
 
     public Employee getEmployeeById(int employeeId) throws SQLException {
-        return employeeManager.getEmployeeById(employeeId);
+        return employeeManager.getEmployeeById(employeeId).get();
+    }
+
+    public boolean doesEmployeeExist(int employeeId) throws SQLException {
+        return employeeManager.getEmployeeById(employeeId).isPresent();
     }
 
     public ArrayList<Employee> getAllEmployees() throws SQLException {

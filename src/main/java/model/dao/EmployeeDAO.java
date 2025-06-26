@@ -1,8 +1,9 @@
-package com.system.model.dao;
+package model.dao;
 
-import com.system.model.pojo.Employee;
+import model.pojo.Employee;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public interface EmployeeDAO {
 
@@ -12,7 +13,7 @@ public interface EmployeeDAO {
 
     boolean updateInfoEmployee(Employee employeeToUpdate) throws SQLException;
 
-    Employee getEmployeeById(int employeeId) throws SQLException;
+    Optional<Employee> getEmployeeById(int employeeId) throws SQLException;
 
     ArrayList<Employee> getAllEmployees() throws SQLException;
 }

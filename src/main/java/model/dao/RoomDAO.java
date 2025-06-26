@@ -1,6 +1,6 @@
-package com.system.model.dao;
+package model.dao;
 
-import com.system.model.pojo.Room;
+import model.pojo.Room;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

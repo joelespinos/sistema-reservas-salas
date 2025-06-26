@@ -1,4 +1,4 @@
-package com.system.utils;
+package utils;
 
 /**
  * Clase que contiene las constantes de conexión a la base de datos.
