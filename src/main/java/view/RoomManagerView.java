@@ -6,6 +6,7 @@ import utils.ReadInput;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class RoomManagerView {
@@ -102,14 +103,17 @@ public class RoomManagerView {
             if (!controller.doesRoomExist(roomId)) {
                 System.out.println("ERROR! No existe una sala con el ID " + roomId);
             } else {
-                System.out.println("La información de la sala a eliminar es:");
-                System.out.println(controller.getRoomById(roomId));
+                Optional<Room> roomOptional = controller.getRoomById(roomId);
+                if (roomOptional.isPresent()) {
+                    System.out.println("La información de la sala a eliminar es:");
+                    System.out.println(roomOptional.get());
 
-                System.out.print("¿Está seguro de que desea eliminar esta sala? (S/N): ");
-                String confirmation = keyboard.nextLine().trim().toUpperCase();
+                    System.out.print("¿Está seguro de que desea eliminar esta sala? (S/N): ");
+                    String confirmation = keyboard.nextLine().trim().toUpperCase();
 
-                if (confirmation.equals("S"))
-                    isDeleted = controller.deleteRoomById(roomId);
+                    if (confirmation.equals("S"))
+                        isDeleted = controller.deleteRoomById(roomId);
+                }
             }
 
         } catch (SQLException e) {
@@ -129,15 +133,19 @@ public class RoomManagerView {
             if (!controller.doesRoomExist(roomId)) {
                 System.out.println("ERROR! No existe una sala con el ID " + roomId);
             } else {
-                Room roomToUpdate = controller.getRoomById(roomId);
-                System.out.println("La información de la sala es:");
-                System.out.println(roomToUpdate);
+                Optional<Room> roomOptional = controller.getRoomById(roomId);
+                if (roomOptional.isPresent()) {
+                    Room roomToUpdate = roomOptional.get();
+                    System.out.println("La información de la sala es:");
+                    System.out.println(roomToUpdate);
 
-                String newName = ReadInput.readString(keyboard, roomToUpdate.getName(), "el nuevo nombre de la sala", MAX_NAME_CHARS);
-                int newCapacity = ReadInput.readIntMinValue(keyboard, roomToUpdate.getCapacity(), "la nueva capacidad de la sala", MIN_CAPACITY);
-                String newResources = ReadInput.readString(keyboard, roomToUpdate.getResources(),"los nuevos recursos disponibles de la sala", MAX_TEXT_CHARS);
+                    System.out.println("Introduzca los nuevos datos de la sala (deje en blanco para no modificar):");
+                    String newName = ReadInput.readString(keyboard, roomToUpdate.getName(), "el nuevo nombre de la sala", MAX_NAME_CHARS);
+                    int newCapacity = ReadInput.readIntMinValue(keyboard, roomToUpdate.getCapacity(), "la nueva capacidad de la sala", MIN_CAPACITY);
+                    String newResources = ReadInput.readString(keyboard, roomToUpdate.getResources(),"los nuevos recursos disponibles de la sala", MAX_TEXT_CHARS);
 
-                isUpdated = controller.updateInfoRoom(roomId, newName, newCapacity, newResources);
+                    isUpdated = controller.updateInfoRoom(roomId, newName, newCapacity, newResources);
+                }
             }
         } catch (SQLException e) {
             System.out.println("ERROR SQL, no se ha podido actualizar la sala del sistema");

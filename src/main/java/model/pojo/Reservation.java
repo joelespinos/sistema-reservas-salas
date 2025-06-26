@@ -32,6 +32,16 @@ public class Reservation {
         this.endTime = endTime;
     }
 
+    // Constructor parametrizado sin reservationId para inserciones
+    public Reservation(int roomId, int employeeId, LocalDate reservationDate, LocalTime startTime, LocalTime endTime) {
+        this.reservationId = 0;
+        this.roomId = roomId;
+        this.employeeId = employeeId;
+        this.reservationDate = reservationDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     // Constructor copia
     public Reservation(Reservation other) {
         this.reservationId = other.reservationId;

@@ -6,6 +6,7 @@ import utils.ReadInput;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class EmployeeManagerView {
@@ -89,14 +90,17 @@ public class EmployeeManagerView {
             if (!controller.doesEmployeeExist(employeeId)) {
                 System.out.println("ERROR! No existe un empleado con el ID " + employeeId);
             } else {
-                System.out.println("La información del empleado a eliminar es:");
-                System.out.println(controller.getEmployeeById(employeeId));
+                Optional<Employee> employeeOptional = controller.getEmployeeById(employeeId);
+                if (employeeOptional.isPresent()) {
+                    System.out.println("La información del empleado a eliminar es:");
+                    System.out.println(employeeOptional.get());
 
-                System.out.print("¿Está seguro de que desea eliminar este empleado? (S/N): ");
-                String confirmation = keyboard.nextLine().trim().toUpperCase();
+                    System.out.print("¿Está seguro de que desea eliminar este empleado? (S/N): ");
+                    String confirmation = keyboard.nextLine().trim().toUpperCase();
 
-                if (confirmation.equals("S"))
-                    isDeleted = controller.deleteEmployeeById(employeeId);
+                    if (confirmation.equals("S"))
+                        isDeleted = controller.deleteEmployeeById(employeeId);
+                }
             }
 
         } catch (SQLException e) {
@@ -118,19 +122,24 @@ public class EmployeeManagerView {
             if (!controller.doesEmployeeExist(employeeId)) {
                 System.out.println("ERROR! No existe un empleado con el ID " + employeeId);
             } else {
-                Employee employeeToUpdate = controller.getEmployeeById(employeeId);
-                System.out.println("La información del empleado es:");
-                System.out.println(employeeToUpdate);
+                Optional<Employee> employeeOptional = controller.getEmployeeById(employeeId);
 
-                String newDni = ReadInput.readString(keyboard, employeeToUpdate.getDni(), "el nuevo DNI del empleado", MAX_DNI_CHARS);
-                String newFirstName = ReadInput.readString(keyboard, employeeToUpdate.getFirstName(), "el nuevo nombre del empleado", MAX_NAME_CHARS);
-                String newLastName1 = ReadInput.readString(keyboard, employeeToUpdate.getLastName1(), "el nuevo primer apellido del empleado", MAX_NAME_CHARS);
-                String newLastName2 = ReadInput.readString(keyboard, employeeToUpdate.getLastName2(), "el nuevo segundo apellido del empleado", MAX_NAME_CHARS);
-                String newPhoneNumber = ReadInput.readStringNum(keyboard, employeeToUpdate.getPhoneNumber(), "el nuevo número de teléfono del empleado", MAX_PHONE_NUMBER_CHARS);
-                String newEmail = ReadInput.readString(keyboard, employeeToUpdate.getEmail(), "el nuevo email del empleado", MAX_NAME_CHARS);
-                String newDepartment = ReadInput.readString(keyboard, employeeToUpdate.getDepartment(), "el nuevo departamento del empleado", MAX_NAME_CHARS);
+                if (employeeOptional.isPresent()) {
+                    Employee employeeToUpdate = employeeOptional.get();
+                    System.out.println("La información del empleado es:");
+                    System.out.println(employeeToUpdate);
 
-                isUpdated = controller.updateInfoEmployee(employeeId, newDni, newFirstName, newLastName1, newLastName2, newPhoneNumber, newEmail, newDepartment);
+                    System.out.println("Introduzca los nuevos datos del empleado (deje en blanco para no modificar):");
+                    String newDni = ReadInput.readString(keyboard, employeeToUpdate.getDni(), "el nuevo DNI del empleado", MAX_DNI_CHARS);
+                    String newFirstName = ReadInput.readString(keyboard, employeeToUpdate.getFirstName(), "el nuevo nombre del empleado", MAX_NAME_CHARS);
+                    String newLastName1 = ReadInput.readString(keyboard, employeeToUpdate.getLastName1(), "el nuevo primer apellido del empleado", MAX_NAME_CHARS);
+                    String newLastName2 = ReadInput.readString(keyboard, employeeToUpdate.getLastName2(), "el nuevo segundo apellido del empleado", MAX_NAME_CHARS);
+                    String newPhoneNumber = ReadInput.readStringNum(keyboard, employeeToUpdate.getPhoneNumber(), "el nuevo número de teléfono del empleado", MAX_PHONE_NUMBER_CHARS);
+                    String newEmail = ReadInput.readString(keyboard, employeeToUpdate.getEmail(), "el nuevo email del empleado", MAX_NAME_CHARS);
+                    String newDepartment = ReadInput.readString(keyboard, employeeToUpdate.getDepartment(), "el nuevo departamento del empleado", MAX_NAME_CHARS);
+
+                    isUpdated = controller.updateInfoEmployee(employeeId, newDni, newFirstName, newLastName1, newLastName2, newPhoneNumber, newEmail, newDepartment);
+                }
             }
         } catch (SQLException e) {
             System.out.println("ERROR SQL, no se ha podido actualizar el empleado del sistema");

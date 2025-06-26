@@ -1,12 +1,16 @@
 package controller;
 
 import model.daodb.EmployeeDAODB;
+import model.daodb.ReservationDAODB;
 import model.daodb.RoomDAODB;
+import model.pojo.Reservation;
 import model.pojo.Room;
 import model.pojo.Employee;
 import utils.DAODBConstants;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -14,13 +18,13 @@ public class ReservationSystemController {
 
     private RoomDAODB roomManager;
     private EmployeeDAODB employeeManager;
-    // private ReservationDAODB reservationManager;
+    private ReservationDAODB reservationManager;
 
     public ReservationSystemController() throws ClassNotFoundException {
         Class.forName(DAODBConstants.DRIVER);
         this.roomManager = new RoomDAODB();
         this.employeeManager = new EmployeeDAODB();
-        // this.reservationManager = new ReservationDAODB();
+        this.reservationManager = new ReservationDAODB();
     }
 
     // Métodos para Room
@@ -45,8 +49,8 @@ public class ReservationSystemController {
         return roomManager.getRoomById(roomId).isPresent();
     }
 
-    public Room getRoomById(int roomId) throws SQLException {
-        return roomManager.getRoomById(roomId).get();
+    public Optional<Room> getRoomById(int roomId) throws SQLException {
+        return roomManager.getRoomById(roomId);
     }
 
     // Métodos para Employee
@@ -65,8 +69,8 @@ public class ReservationSystemController {
         return employeeManager.updateInfoEmployee(employee);
     }
 
-    public Employee getEmployeeById(int employeeId) throws SQLException {
-        return employeeManager.getEmployeeById(employeeId).get();
+    public Optional<Employee> getEmployeeById(int employeeId) throws SQLException {
+        return employeeManager.getEmployeeById(employeeId);
     }
 
     public boolean doesEmployeeExist(int employeeId) throws SQLException {
@@ -76,4 +80,38 @@ public class ReservationSystemController {
     public ArrayList<Employee> getAllEmployees() throws SQLException {
         return employeeManager.getAllEmployees();
     }
+
+    // Métodos para Reservation
+
+    public boolean insertNewReservation(int roomId, int employeeId, LocalDate reservationDate, LocalTime startTime, LocalTime endTime) throws SQLException {
+        return reservationManager.insertNewReservation(new Reservation(roomId, employeeId, reservationDate, startTime, endTime));
+    }
+
+    public boolean deleteReservationById(int reservationId) throws SQLException {
+        return reservationManager.deleteReservationById(reservationId);
+    }
+
+    public Optional<Reservation> getReservationById(int reservationId) throws SQLException {
+        return reservationManager.getReservationById(reservationId);
+    }
+
+    public Optional<Integer> validateReservationTime(int roomId, LocalDate reservationDate, LocalTime startTime, LocalTime endTime) throws SQLException {
+        Optional<Integer> reservationIdOverlap = Optional.empty();
+        ArrayList<Reservation> reservations = reservationManager.getAllReservationsByRoomId(roomId);
+        int i = 0;
+
+        while (i < reservations.size() && reservationIdOverlap.isEmpty()) {
+            Reservation indexReservation = reservations.get(i);
+            if (indexReservation.getReservationDate().equals(reservationDate)) {
+
+                if ((startTime.isBefore(indexReservation.getEndTime()) && endTime.isAfter(indexReservation.getStartTime())) ||
+                    (startTime.equals(indexReservation.getStartTime()) || endTime.equals(indexReservation.getEndTime()))) {
+                    reservationIdOverlap = Optional.of(indexReservation.getReservationId());
+                }
+            }
+            i++;
+        }
+        return reservationIdOverlap;
+    }
+
 }

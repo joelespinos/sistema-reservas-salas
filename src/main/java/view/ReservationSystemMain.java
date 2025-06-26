@@ -24,7 +24,7 @@ public class ReservationSystemMain {
                 option = Integer.parseInt(keyboard.nextLine());
                 switch (option) {
                     case 0:
-                        System.out.println("Saliendo del programa...");
+                        System.out.println("\nSaliendo del programa...");
                         break;
 
                     case 1:
@@ -36,7 +36,7 @@ public class ReservationSystemMain {
                         break;
 
                     case 3:
-                        reservationManagement(keyboard, controller);
+                        ReservationManagerView.reservationManagement(keyboard, controller);
                         break;
 
                     default:
@@ -49,9 +49,6 @@ public class ReservationSystemMain {
             }
 
         } while (option != EXIT);
-    }
-
-    private static void reservationManagement(Scanner keyboard, ReservationSystemController controller) {
     }
 
     private static String getMainMenu() {
