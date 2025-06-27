@@ -29,6 +29,14 @@ public class EmployeeTest {
         String department = "IT";
         boolean result = controller.insertNewEmployee(dni, firstName, lastName1, lastName2, phoneNumber, email, department);
         assertTrue(result);
+
+        // Limpieza de residuos
+        List<Employee> employees = controller.getAllEmployees();
+        for (Employee emp : employees) {
+            if (emp.getDni().equals(dni) && emp.getEmail().equals(email)) {
+                controller.deleteEmployeeById(emp.getEmployeeId());
+            }
+        }
     }
 
     @Test
@@ -49,6 +57,13 @@ public class EmployeeTest {
 
         boolean deleteResult = controller.deleteEmployeeById(employeeId);
         assertTrue(deleteResult);
+
+        // Limpieza de residuos (por si acaso)
+        for (Employee emp : employees) {
+            if (emp.getDni().equals(dni) && emp.getEmail().equals(email)) {
+                controller.deleteEmployeeById(emp.getEmployeeId());
+            }
+        }
     }
 
     @Test
@@ -87,6 +102,9 @@ public class EmployeeTest {
         assertEquals(newPhoneNumber, emp.getPhoneNumber());
         assertEquals(newEmail, emp.getEmail());
         assertEquals(newDepartment, emp.getDepartment());
+
+        // Limpieza de residuos
+        controller.deleteEmployeeById(employeeId);
     }
 
     @Test
@@ -115,12 +133,19 @@ public class EmployeeTest {
         assertEquals(phoneNumber, emp.getPhoneNumber());
         assertEquals(email, emp.getEmail());
         assertEquals(department, emp.getDepartment());
+
+        // Limpieza de residuos
+        controller.deleteEmployeeById(employeeId);
     }
 
     @Test
     void testGetAllEmployees() throws SQLException {
-        controller.insertNewEmployee("11111111F", "Empleado1", "Apellido1", "Apellido2", "655555555", "empleado1@test.com", "Compras");
-        controller.insertNewEmployee("22222222G", "Empleado2", "Apellido1", "Apellido2", "666666666", "empleado2@test.com", "Logística");
+        String dni1 = "11111111F";
+        String dni2 = "22222222G";
+        String email1 = "empleado1@test.com";
+        String email2 = "empleado2@test.com";
+        controller.insertNewEmployee(dni1, "Empleado1", "Apellido1", "Apellido2", "655555555", email1, "Compras");
+        controller.insertNewEmployee(dni2, "Empleado2", "Apellido1", "Apellido2", "666666666", email2, "Logística");
 
         List<Employee> employees = controller.getAllEmployees();
         assertNotNull(employees);
@@ -129,10 +154,18 @@ public class EmployeeTest {
         boolean foundEmp1 = false;
         boolean foundEmp2 = false;
         for (Employee employee : employees) {
-            if ("Empleado1".equals(employee.getFirstName()) && "11111111F".equals(employee.getDni())) foundEmp1 = true;
-            if ("Empleado2".equals(employee.getFirstName()) && "22222222G".equals(employee.getDni())) foundEmp2 = true;
+            if ("Empleado1".equals(employee.getFirstName()) && dni1.equals(employee.getDni())) foundEmp1 = true;
+            if ("Empleado2".equals(employee.getFirstName()) && dni2.equals(employee.getDni())) foundEmp2 = true;
         }
         assertTrue(foundEmp1);
         assertTrue(foundEmp2);
+
+        // Limpieza de residuos
+        for (Employee emp : employees) {
+            if ((emp.getDni().equals(dni1) && emp.getEmail().equals(email1)) ||
+                (emp.getDni().equals(dni2) && emp.getEmail().equals(email2))) {
+                controller.deleteEmployeeById(emp.getEmployeeId());
+            }
+        }
     }
 }

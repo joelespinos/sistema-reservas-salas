@@ -31,7 +31,11 @@ public class ReservationManagerView {
                         }
                         break;
                     case 2:
-                        System.out.println("Cancelar reservación (funcionalidad de prueba)");
+                        if (handlerDeleteReservation(keyboard, controller)) {
+                            System.out.println("Reservación cancelada con éxito.");
+                        } else {
+                            System.out.println("No se ha podido cancelar la reservación.");
+                        }
                         break;
                     default:
                         System.out.println("Error! Opción incorrecta.");
@@ -42,6 +46,27 @@ public class ReservationManagerView {
                 reservationOption = REPEAT;
             }
         } while (reservationOption != EXIT);
+    }
+
+    private static boolean handlerDeleteReservation(Scanner keyboard, ReservationSystemController controller) {
+        boolean isDeleted = false;
+        System.out.println("\n--- CANCELAR RESERVA ---");
+        try {
+            System.out.print("Ingrese el ID de la reserva a cancelar: ");
+            int reservationId = Integer.parseInt(keyboard.nextLine());
+
+            if (controller.doesReservationExist(reservationId)) {
+                isDeleted = controller.deleteReservationById(reservationId);
+            } else {
+                System.out.println("Error! La reserva con ID " + reservationId + " no existe.");
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("Error! Debe ingresar un valor válido.");
+        } catch (Exception e) {
+            System.out.println("Error al cancelar la reservación: " + e.getMessage());
+        }
+        return isDeleted;
     }
 
     private static boolean handlerAddReservation(Scanner keyboard, ReservationSystemController controller) {

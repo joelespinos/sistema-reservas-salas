@@ -102,7 +102,10 @@ public class ReservationSystemController {
 
         while (i < reservations.size() && reservationIdOverlap.isEmpty()) {
             Reservation indexReservation = reservations.get(i);
+
+            //Revisa que la fecha de la reserva sea la misma que la que se está intentando reservar
             if (indexReservation.getReservationDate().equals(reservationDate)) {
+
                 if (startTime.isBefore(indexReservation.getEndTime()) &&
                         endTime.isAfter(indexReservation.getStartTime())) {
                     reservationIdOverlap = Optional.of(indexReservation.getReservationId());
@@ -111,6 +114,10 @@ public class ReservationSystemController {
             i++;
         }
         return reservationIdOverlap;
+    }
+
+    public boolean doesReservationExist(int reservationId) throws SQLException {
+        return reservationManager.getReservationById(reservationId).isPresent();
     }
 
 }
