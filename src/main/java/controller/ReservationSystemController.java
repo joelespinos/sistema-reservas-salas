@@ -103,9 +103,8 @@ public class ReservationSystemController {
         while (i < reservations.size() && reservationIdOverlap.isEmpty()) {
             Reservation indexReservation = reservations.get(i);
             if (indexReservation.getReservationDate().equals(reservationDate)) {
-
-                if ((startTime.isBefore(indexReservation.getEndTime()) && endTime.isAfter(indexReservation.getStartTime())) ||
-                    (startTime.equals(indexReservation.getStartTime()) || endTime.equals(indexReservation.getEndTime()))) {
+                if (startTime.isBefore(indexReservation.getEndTime()) &&
+                        endTime.isAfter(indexReservation.getStartTime())) {
                     reservationIdOverlap = Optional.of(indexReservation.getReservationId());
                 }
             }

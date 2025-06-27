@@ -1,5 +1,8 @@
 package utils;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ReadInput {
@@ -28,26 +31,6 @@ public class ReadInput {
         } while (!InputValidator.isNumberValid(number, minValue));
         return number;
     }
-
-//    public static int readIntMaxChars(Scanner keyboard, String prompt, int maxChars) {
-//        String numberStr;
-//        int number;
-//        try {
-//            do {
-//                System.out.print("Ingrese " + prompt + ": ");
-//                numberStr = keyboard.nextLine();
-//                if (numberStr.isBlank())
-//                    System.out.println("ERROR! " + prompt + " no puede estar en blanco o vacío");
-//            } while (InputValidator.isStringValid(numberStr, maxChars));
-//
-//            number = Integer.parseInt(numberStr);
-//
-//        } catch (NumberFormatException e) {
-//            System.out.println("Error! Debe ingresar un número entero.");
-//            number = REPEAT;
-//        }
-//        return number;
-//    }
 
     public static int readPositiveInt(Scanner keyboard, String prompt, int minValue) {
         String numberStr;
@@ -144,5 +127,35 @@ public class ReadInput {
         } while (!InputValidator.isStringValid(str, maxChars));
 
         return str;
+    }
+
+    public static String readDate(Scanner keyboard, String prompt) {
+        String date;
+        do {
+            System.out.print("Ingrese " + prompt + " (YYYY-MM-DD): ");
+            date = keyboard.nextLine();
+
+            if (!InputValidator.isDateValid(date)) {
+                System.out.println("ERROR! Fecha no válida.");
+            }
+        } while (!InputValidator.isDateValid(date));
+        return date;
+    }
+
+    public static String readTimeAccordingADate(Scanner keyboard, String prompt,
+                                                Optional<LocalTime> optionalTime, LocalDate reservationDate) {
+        String time;
+        do {
+            System.out.print("Ingrese " + prompt + " (HH:MM): ");
+            time = keyboard.nextLine();
+
+            if (!InputValidator.isTimeValidAccordingADate(time, reservationDate)) {
+                System.out.println("ERROR! Hora no válida.");
+            }
+            else if (!InputValidator.isTimeAfterOptional(time, optionalTime)) {
+                System.out.println("ERROR! La hora debe ser posterior a " + optionalTime.get());
+            }
+        } while (!InputValidator.isTimeValidAccordingADate(time, reservationDate) || !InputValidator.isTimeAfterOptional(time, optionalTime));
+        return time;
     }
 }
