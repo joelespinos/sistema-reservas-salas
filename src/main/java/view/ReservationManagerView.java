@@ -13,6 +13,11 @@ public class ReservationManagerView {
     private static final int EXIT = 0;
     private static final int REPEAT = -1;
 
+    /**
+     * Menú principal de gestión de reservas.
+     * @param keyboard Scanner para leer desde consola.
+     * @param controller Controlador del sistema de reservas.
+     */
     public static void reservationManagement(Scanner keyboard, ReservationSystemController controller) {
         int reservationOption;
         do {
@@ -21,33 +26,39 @@ public class ReservationManagerView {
                 reservationOption = Integer.parseInt(keyboard.nextLine());
                 switch (reservationOption) {
                     case 0:
-                        System.out.println("Volviendo al menú principal...");
+                        System.out.println("\nVolviendo al menú principal...");
                         break;
                     case 1:
                         if (handlerAddReservation(keyboard, controller)) {
-                            System.out.println("Reservación realizada con éxito.");
+                            System.out.println("\nReservación realizada con éxito.");
                         } else {
-                            System.out.println("No se ha podido realizar la reservación.");
+                            System.out.println("\nNo se ha podido realizar la reservación.");
                         }
                         break;
                     case 2:
                         if (handlerDeleteReservation(keyboard, controller)) {
-                            System.out.println("Reservación cancelada con éxito.");
+                            System.out.println("\nReservación cancelada con éxito.");
                         } else {
-                            System.out.println("No se ha podido cancelar la reservación.");
+                            System.out.println("\nNo se ha podido cancelar la reservación.");
                         }
                         break;
                     default:
-                        System.out.println("Error! Opción incorrecta.");
+                        System.out.println("\nError! Opción incorrecta.");
                         break;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Error! Debe ingresar un número entero.");
+                System.out.println("\nError! Debe ingresar un número entero.");
                 reservationOption = REPEAT;
             }
         } while (reservationOption != EXIT);
     }
 
+    /**
+     * Maneja la lógica para cancelar una reserva.
+     * @param keyboard Scanner para leer desde consola.
+     * @param controller Controlador del sistema de reservas.
+     * @return true si la reserva se eliminó correctamente, false en caso contrario.
+     */
     private static boolean handlerDeleteReservation(Scanner keyboard, ReservationSystemController controller) {
         boolean isDeleted = false;
         System.out.println("\n--- CANCELAR RESERVA ---");
@@ -57,30 +68,36 @@ public class ReservationManagerView {
 
             if (controller.doesReservationExist(reservationId)) {
 
-                System.out.println("Detalles de la reserva a cancelar:");
-                System.out.println(controller.getReservationById(reservationId));
+                System.out.println("\nDetalles de la reserva a cancelar:");
+                System.out.println(controller.getReservationById(reservationId).get());
 
-                System.out.print("¿Está seguro de que desea cancelar esta reserva? (S/N): ");
+                System.out.print("\n¿Está seguro de que desea cancelar esta reserva? (S/N): ");
                 String confirmation = keyboard.nextLine().trim().toUpperCase();
 
                 if (!confirmation.equals("S")) {
-                    System.out.println("Operación cancelada por el usuario.");
+                    System.out.println("\nOperación cancelada por el usuario.");
                     isDeleted = false;
                 } else {
                     isDeleted = controller.deleteReservationById(reservationId);
                 }
             } else {
-                System.out.println("Error! La reserva con ID " + reservationId + " no existe.");
+                System.out.println("\nError! La reserva con ID " + reservationId + " no existe.\n");
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("Error! Debe ingresar un valor válido.");
+            System.out.println("\nError! Debe ingresar un valor válido.\n");
         } catch (Exception e) {
-            System.out.println("Error al cancelar la reservación: " + e.getMessage());
+            System.out.println("\nError al cancelar la reservación: " + e.getMessage() + "\n");
         }
         return isDeleted;
     }
 
+    /**
+     * Maneja la lógica para añadir una nueva reserva.
+     * @param keyboard Scanner para leer desde consola.
+     * @param controller Controlador del sistema de reservas.
+     * @return true si la reserva se añadió correctamente, false en caso contrario.
+     */
     private static boolean handlerAddReservation(Scanner keyboard, ReservationSystemController controller) {
         boolean isAdded = false;
         Optional<LocalTime> timeToValidateOptional = Optional.empty();
@@ -107,27 +124,31 @@ public class ReservationManagerView {
 
                     Optional<Integer> reservationIdOverlap = controller.validateReservationTime(roomId, reservationDate, startTime, endTime);
                     if (reservationIdOverlap.isPresent()) {
-                        System.out.println("Error! La sala ya está reservada en ese horario por:");
-                        System.out.println(controller.getReservationById(reservationIdOverlap.get()));
+                        System.out.println("\nError! La sala ya está reservada en ese horario por:");
+                        System.out.println(controller.getReservationById(reservationIdOverlap.get()).get());
                     } else {
                         isAdded = controller.insertNewReservation(roomId, employeeId, reservationDate, startTime, endTime);
                     }
                 } else {
-                    System.out.println("Error! El empleado con ID " + employeeId + " no existe.");
+                    System.out.println("\nError! El empleado con ID " + employeeId + " no existe.\n");
                 }
 
             } else {
-                System.out.println("Error! La sala con ID " + roomId + " no existe.");
+                System.out.println("\nError! La sala con ID " + roomId + " no existe.\n");
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("Error! Debe ingresar un valor válido.");
+            System.out.println("\nError! Debe ingresar un valor válido.\n");
         } catch (Exception e) {
-            System.out.println("Error al realizar la reservación: " + e.getMessage());
+            System.out.println("\nError al realizar la reservación: " + e.getMessage() + "\n");
         }
         return isAdded;
     }
 
+    /**
+     * Devuelve el menú de gestión de reservas como String.
+     * @return Menú de gestión de reservas.
+     */
     private static String getReservationManagementMenu() {
         return """
                 \n--- GESTIÓN DE RESERVAS ---

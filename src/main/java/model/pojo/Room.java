@@ -96,6 +96,6 @@ public class Room {
     public String toString() {
         return  "Sala: " + name + " (ID: " + roomId + ")\n" +
                 "Capacidad: " + capacity + " personas\n" +
-                "Recursos: " + resources + "\n";
+                "Recursos: " + resources;
     }
 }

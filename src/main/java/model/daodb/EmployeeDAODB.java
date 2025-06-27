@@ -12,6 +12,12 @@ public class EmployeeDAODB implements EmployeeDAO {
 
     private static final int NON_ROWS_AFFECTED = 0;
 
+    /**
+     * Inserta un nuevo empleado en la base de datos.
+     * @param employeeToCreate Objeto Employee con los datos del empleado a crear.
+     * @return true si la inserción fue exitosa, false en caso contrario.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public boolean insertNewEmployee(Employee employeeToCreate) throws SQLException {
         boolean isInsert = false;
@@ -32,6 +38,12 @@ public class EmployeeDAODB implements EmployeeDAO {
         return isInsert;
     }
 
+    /**
+     * Elimina un empleado de la base de datos por su ID.
+     * @param employeeId ID del empleado a eliminar.
+     * @return true si la eliminación fue exitosa, false en caso contrario.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public boolean deleteEmployeeById(int employeeId) throws SQLException {
         boolean isDeleted = false;
@@ -45,6 +57,12 @@ public class EmployeeDAODB implements EmployeeDAO {
         return isDeleted;
     }
 
+    /**
+     * Actualiza la información de un empleado existente.
+     * @param employeeToUpdate Objeto Employee con los datos actualizados.
+     * @return true si la actualización fue exitosa, false en caso contrario.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public boolean updateInfoEmployee(Employee employeeToUpdate) throws SQLException {
         boolean isUpdated = false;
@@ -66,6 +84,12 @@ public class EmployeeDAODB implements EmployeeDAO {
         return isUpdated;
     }
 
+    /**
+     * Obtiene un empleado por su ID.
+     * @param employeeId ID del empleado a consultar.
+     * @return Optional con el empleado encontrado, o vacío si no existe.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public Optional<Employee> getEmployeeById(int employeeId) throws SQLException {
         Optional<Employee> employeeOptional = Optional.empty();
@@ -93,6 +117,11 @@ public class EmployeeDAODB implements EmployeeDAO {
         return employeeOptional;
     }
 
+    /**
+     * Obtiene todos los empleados de la base de datos.
+     * @return ArrayList con todos los empleados.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public ArrayList<Employee> getAllEmployees() throws SQLException {
         ArrayList<Employee> employees = new ArrayList<>();
@@ -118,6 +147,12 @@ public class EmployeeDAODB implements EmployeeDAO {
         return employees;
     }
 
+    /**
+     * Comprueba si existe un empleado con el DNI dado.
+     * @param dni DNI a comprobar.
+     * @return true si existe, false en caso contrario.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public boolean doesDNIExist(String dni) throws SQLException {
         boolean exists = false;

@@ -12,6 +12,12 @@ public class RoomDAODB implements RoomDAO {
 
     private static final int NON_ROWS_AFFECTED = 0;
     
+    /**
+     * Inserta una nueva sala en la base de datos.
+     * @param roomToCreate Objeto Room con los datos de la sala a crear.
+     * @return true si la inserción fue exitosa, false en caso contrario.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public boolean insertNewRoom(Room roomToCreate) throws SQLException {
         boolean isInsert = false;
@@ -29,6 +35,12 @@ public class RoomDAODB implements RoomDAO {
         return isInsert;
     }
 
+    /**
+     * Elimina una sala de la base de datos por su ID.
+     * @param roomId ID de la sala a eliminar.
+     * @return true si la eliminación fue exitosa, false en caso contrario.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public boolean deleteRoomById(int roomId) throws SQLException {
         boolean isDeleted = false;
@@ -43,6 +55,12 @@ public class RoomDAODB implements RoomDAO {
         return isDeleted;
     }
 
+    /**
+     * Actualiza la información de una sala existente.
+     * @param roomToUpdate Objeto Room con los datos actualizados.
+     * @return true si la actualización fue exitosa, false en caso contrario.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public boolean updateInfoRoom(Room roomToUpdate) throws SQLException {
         boolean isUpdated = false;
@@ -60,6 +78,12 @@ public class RoomDAODB implements RoomDAO {
         return isUpdated;
     }
 
+    /**
+     * Obtiene una sala por su ID.
+     * @param roomId ID de la sala a consultar.
+     * @return Optional con la sala encontrada, o vacío si no existe.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public Optional<Room> getRoomById(int roomId) throws SQLException {
         Optional<Room> roomOptional = Optional.empty();
@@ -82,6 +106,11 @@ public class RoomDAODB implements RoomDAO {
         return roomOptional;
     }
 
+    /**
+     * Obtiene todas las salas de la base de datos.
+     * @return ArrayList con todas las salas.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public ArrayList<Room> getAllRooms() throws SQLException {
         ArrayList<Room> rooms = new ArrayList<>();

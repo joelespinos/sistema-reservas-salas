@@ -11,8 +11,6 @@ public interface ReservationDAO {
 
     boolean deleteReservationById(int reservationId) throws SQLException;
 
-    //boolean updateInfoReservation(Reservation reservationToUpdate) throws SQLException;
-
     Optional<Reservation> getReservationById(int reservationId) throws SQLException;
 
     ArrayList<Reservation> getAllReservationsByRoomId(int roomId) throws SQLException;

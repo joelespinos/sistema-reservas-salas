@@ -17,6 +17,11 @@ public class EmployeeManagerView {
     private static final int MAX_DNI_CHARS = 9;
     private static final int MAX_PHONE_NUMBER_CHARS = 9;
 
+    /**
+     * Menú principal de gestión de empleados.
+     * @param keyboard Scanner para leer desde consola.
+     * @param controller Controlador del sistema de reservas.
+     */
     public static void employeeManagement(Scanner keyboard, ReservationSystemController controller) {
         int employeeOption;
         do {
@@ -25,40 +30,46 @@ public class EmployeeManagerView {
                 employeeOption = Integer.parseInt(keyboard.nextLine());
                 switch (employeeOption) {
                     case 0:
-                        System.out.println("Volviendo al menú principal...");
+                        System.out.println("\nVolviendo al menú principal...");
                         break;
                     case 1:
                         if (handleAddEmployee(keyboard, controller))
-                            System.out.println("El empleado se ha agregado correctamente al sistema");
+                            System.out.println("\nEl empleado se ha agregado correctamente al sistema");
                         else
-                            System.out.println("No se ha podido agregar el empleado al sistema");
+                            System.out.println("\nNo se ha podido agregar el empleado al sistema");
                         break;
                     case 2:
                         if (handleDeleteEmployee(keyboard, controller))
-                            System.out.println("El empleado se ha eliminado correctamente del sistema");
+                            System.out.println("\nEl empleado se ha eliminado correctamente del sistema");
                         else
-                            System.out.println("Operación cancelada, no se ha eliminado el empleado");
+                            System.out.println("\nOperación cancelada, no se ha eliminado el empleado");
                         break;
                     case 3:
                         if (handleUpdateEmployee(keyboard, controller))
-                            System.out.println("El empleado se ha actualizado correctamente");
+                            System.out.println("\nEl empleado se ha actualizado correctamente");
                         else
-                            System.out.println("No se ha podido actualizar el empleado en el sistema");
+                            System.out.println("\nNo se ha podido actualizar el empleado en el sistema");
                         break;
                     case 4:
                         handleSelectAllEmployees(controller);
                         break;
                     default:
-                        System.out.println("Error! Opción incorrecta.");
+                        System.out.println("\nError! Opción incorrecta.");
                         break;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Error! Debe ingresar un número entero.");
+                System.out.println("\nError! Debe ingresar un número entero.");
                 employeeOption = REPEAT;
             }
         } while (employeeOption != EXIT);
     }
 
+    /**
+     * Maneja la lógica para agregar un nuevo empleado.
+     * @param keyboard Scanner para leer desde consola.
+     * @param controller Controlador del sistema de reservas.
+     * @return true si el empleado se agregó correctamente, false en caso contrario.
+     */
     private static boolean handleAddEmployee(Scanner keyboard, ReservationSystemController controller) {
         boolean isAdded = false;
         System.out.println("\n--- AGREGAR NUEVO EMPLEADO ---");
@@ -73,11 +84,17 @@ public class EmployeeManagerView {
         try {
             isAdded = controller.insertNewEmployee(dni, firstName, lastName1, lastName2, phoneNumber, email, department);
         } catch (SQLException e) {
-            System.out.println("ERROR SQL, no se ha podido agregar el empleado en el sistema");
+            System.out.println("\nERROR SQL, no se ha podido agregar el empleado en el sistema\n");
         }
         return isAdded;
     }
 
+    /**
+     * Maneja la lógica para eliminar un empleado.
+     * @param keyboard Scanner para leer desde consola.
+     * @param controller Controlador del sistema de reservas.
+     * @return true si el empleado se eliminó correctamente, false en caso contrario.
+     */
     private static boolean handleDeleteEmployee(Scanner keyboard, ReservationSystemController controller) {
         boolean isDeleted = false;
         System.out.println("\n--- BORRAR UN EMPLEADO ---");
@@ -88,14 +105,14 @@ public class EmployeeManagerView {
             employeeId = Integer.parseInt(keyboard.nextLine());
 
             if (!controller.doesEmployeeExist(employeeId)) {
-                System.out.println("ERROR! No existe un empleado con el ID " + employeeId);
+                System.out.println("\nERROR! No existe un empleado con el ID " + employeeId + "\n");
             } else {
                 Optional<Employee> employeeOptional = controller.getEmployeeById(employeeId);
                 if (employeeOptional.isPresent()) {
-                    System.out.println("La información del empleado a eliminar es:");
+                    System.out.println("\nLa información del empleado a eliminar es:");
                     System.out.println(employeeOptional.get());
 
-                    System.out.print("¿Está seguro de que desea eliminar este empleado? (S/N): ");
+                    System.out.print("\n¿Está seguro de que desea eliminar este empleado? (S/N): ");
                     String confirmation = keyboard.nextLine().trim().toUpperCase();
 
                     if (confirmation.equals("S"))
@@ -104,13 +121,19 @@ public class EmployeeManagerView {
             }
 
         } catch (SQLException e) {
-            System.out.println("ERROR SQL, no se ha podido eliminar el empleado del sistema");
+            System.out.println("\nERROR SQL, no se ha podido eliminar el empleado del sistema\n");
         } catch (NumberFormatException e) {
-            System.out.println("Error! Debe ingresar un número entero.");
+            System.out.println("\nError! Debe ingresar un número entero.\n");
         }
         return isDeleted;
     }
 
+    /**
+     * Maneja la lógica para actualizar los datos de un empleado.
+     * @param keyboard Scanner para leer desde consola.
+     * @param controller Controlador del sistema de reservas.
+     * @return true si el empleado se actualizó correctamente, false en caso contrario.
+     */
     private static boolean handleUpdateEmployee(Scanner keyboard, ReservationSystemController controller) {
         boolean isUpdated = false;
         int employeeId;
@@ -120,16 +143,16 @@ public class EmployeeManagerView {
             employeeId = Integer.parseInt(keyboard.nextLine());
 
             if (!controller.doesEmployeeExist(employeeId)) {
-                System.out.println("ERROR! No existe un empleado con el ID " + employeeId);
+                System.out.println("\nERROR! No existe un empleado con el ID " + employeeId + "\n");
             } else {
                 Optional<Employee> employeeOptional = controller.getEmployeeById(employeeId);
 
                 if (employeeOptional.isPresent()) {
                     Employee employeeToUpdate = employeeOptional.get();
-                    System.out.println("La información del empleado es:");
+                    System.out.println("\nLa información del empleado es:");
                     System.out.println(employeeToUpdate);
 
-                    System.out.println("Introduzca los nuevos datos del empleado (deje en blanco para no modificar):");
+                    System.out.println("\nIntroduzca los nuevos datos del empleado (deje en blanco para no modificar):");
                     String newDni = ReadInput.readString(keyboard, employeeToUpdate.getDni(), "el nuevo DNI del empleado", MAX_DNI_CHARS);
                     String newFirstName = ReadInput.readString(keyboard, employeeToUpdate.getFirstName(), "el nuevo nombre del empleado", MAX_NAME_CHARS);
                     String newLastName1 = ReadInput.readString(keyboard, employeeToUpdate.getLastName1(), "el nuevo primer apellido del empleado", MAX_NAME_CHARS);
@@ -142,18 +165,22 @@ public class EmployeeManagerView {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("ERROR SQL, no se ha podido actualizar el empleado del sistema");
+            System.out.println("\nERROR SQL, no se ha podido actualizar el empleado del sistema\n");
         } catch (NumberFormatException e) {
-            System.out.println("Error! Debe ingresar un número entero.");
+            System.out.println("\nError! Debe ingresar un número entero.\n");
         }
         return isUpdated;
     }
 
+    /**
+     * Muestra el listado de todos los empleados registrados en el sistema.
+     * @param controller Controlador del sistema de reservas.
+     */
     private static void handleSelectAllEmployees(ReservationSystemController controller) {
         try {
             ArrayList<Employee> employeesList = controller.getAllEmployees();
             if (employeesList.isEmpty()) {
-                System.out.println("No hay empleados registrados en el sistema.");
+                System.out.println("\nNo hay empleados registrados en el sistema.\n");
             } else {
                 System.out.println("\n--- LISTADO DE EMPLEADOS ---");
                 for (Employee employee : employeesList) {
@@ -161,10 +188,14 @@ public class EmployeeManagerView {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("ERROR SQL, no se ha podido obtener el listado de empleados del sistema");
+            System.out.println("\nERROR SQL, no se ha podido obtener el listado de empleados del sistema\n");
         }
     }
 
+    /**
+     * Devuelve el menú de gestión de empleados como String.
+     * @return Menú de gestión de empleados.
+     */
     private static String getEmployeeManagementMenu() {
         return """
                 \n--- GESTIÓN DE EMPLEADOS ---

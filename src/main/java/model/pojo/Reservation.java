@@ -129,6 +129,6 @@ public class Reservation {
                 "Empleado ID: " + employeeId + "\n" +
                 "Fecha: " + reservationDate + "\n" +
                 "Hora inicio: " + startTime + "\n" +
-                "Hora fin: " + endTime + "\n";
+                "Hora fin: " + endTime;
     }
 }

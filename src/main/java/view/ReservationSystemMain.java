@@ -8,6 +8,12 @@ public class ReservationSystemMain {
     private static final int EXIT = 0;
     private static final int REPEAT = -1;
 
+    /**
+     * Clase principal del sistema de reservas de salas.
+     * Gestiona el menú principal y la navegación entre las distintas vistas del sistema.
+     *
+     * @param args Argumentos de línea de comandos (no utilizados).
+     */
     public static void main(String[] args) {
         Scanner keyboard = new Scanner(System.in);
         ReservationSystemController controller;
@@ -51,6 +57,10 @@ public class ReservationSystemMain {
         } while (option != EXIT);
     }
 
+    /**
+     * Devuelve el menú principal del sistema como String.
+     * @return Menú principal.
+     */
     private static String getMainMenu() {
         return """
                 \n--- SISTEMA DE RESERVAS DE SALAS ---

@@ -12,6 +12,12 @@ public class ReservationDAODB implements ReservationDAO {
 
     private static final int NON_ROWS_AFFECTED = 0;
 
+    /**
+     * Inserta una nueva reserva en la base de datos.
+     * @param reservationToCreate Objeto Reservation con los datos de la reserva a crear.
+     * @return true si la inserción fue exitosa, false en caso contrario.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public boolean insertNewReservation(Reservation reservationToCreate) throws SQLException {
         boolean isInserted = false;
@@ -30,6 +36,12 @@ public class ReservationDAODB implements ReservationDAO {
         return isInserted;
     }
 
+    /**
+     * Elimina una reserva de la base de datos por su ID.
+     * @param reservationId ID de la reserva a eliminar.
+     * @return true si la eliminación fue exitosa, false en caso contrario.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public boolean deleteReservationById(int reservationId) throws SQLException {
         boolean isDeleted = false;
@@ -43,6 +55,12 @@ public class ReservationDAODB implements ReservationDAO {
         return isDeleted;
     }
 
+    /**
+     * Obtiene una reserva por su ID.
+     * @param reservationId ID de la reserva a consultar.
+     * @return Optional con la reserva encontrada, o vacío si no existe.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public Optional<Reservation> getReservationById(int reservationId) throws SQLException {
         Optional<Reservation> reservationOptional = Optional.empty();
@@ -68,6 +86,12 @@ public class ReservationDAODB implements ReservationDAO {
         return reservationOptional;
     }
 
+    /**
+     * Obtiene todas las reservas de una sala específica.
+     * @param roomId ID de la sala.
+     * @return ArrayList con todas las reservas de la sala.
+     * @throws SQLException si ocurre un error en la base de datos.
+     */
     @Override
     public ArrayList<Reservation> getAllReservationsByRoomId(int roomId) throws SQLException {
         ArrayList<Reservation> reservations = new ArrayList<>();
