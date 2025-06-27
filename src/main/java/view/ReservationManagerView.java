@@ -56,7 +56,19 @@ public class ReservationManagerView {
             int reservationId = Integer.parseInt(keyboard.nextLine());
 
             if (controller.doesReservationExist(reservationId)) {
-                isDeleted = controller.deleteReservationById(reservationId);
+
+                System.out.println("Detalles de la reserva a cancelar:");
+                System.out.println(controller.getReservationById(reservationId));
+
+                System.out.print("¿Está seguro de que desea cancelar esta reserva? (S/N): ");
+                String confirmation = keyboard.nextLine().trim().toUpperCase();
+
+                if (!confirmation.equals("S")) {
+                    System.out.println("Operación cancelada por el usuario.");
+                    isDeleted = false;
+                } else {
+                    isDeleted = controller.deleteReservationById(reservationId);
+                }
             } else {
                 System.out.println("Error! La reserva con ID " + reservationId + " no existe.");
             }

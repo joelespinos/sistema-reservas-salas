@@ -81,6 +81,10 @@ public class ReservationSystemController {
         return employeeManager.getAllEmployees();
     }
 
+    public boolean doesDNIExist(String dni) throws SQLException {
+        return employeeManager.doesDNIExist(dni);
+    }
+
     // Métodos para Reservation
 
     public boolean insertNewReservation(int roomId, int employeeId, LocalDate reservationDate, LocalTime startTime, LocalTime endTime) throws SQLException {

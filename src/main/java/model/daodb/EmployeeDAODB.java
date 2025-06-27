@@ -117,4 +117,21 @@ public class EmployeeDAODB implements EmployeeDAO {
         }
         return employees;
     }
+
+    @Override
+    public boolean doesDNIExist(String dni) throws SQLException {
+        boolean exists = false;
+        String sqlSentence = "SELECT COUNT(*) FROM Employee WHERE DNI = ?";
+        try (Connection conn = DriverManager.getConnection(DAODBConstants.URL, DAODBConstants.USER, DAODBConstants.PASSWD);
+             PreparedStatement psCheck = conn.prepareStatement(sqlSentence)) {
+
+            psCheck.setString(1, dni);
+            ResultSet rs = psCheck.executeQuery();
+
+            if (rs.next()) {
+                exists = rs.getInt(1) > 0;
+            }
+        }
+        return exists;
+    }
 }

@@ -124,13 +124,11 @@ public class Reservation {
     // toString
     @Override
     public String toString() {
-        return "Reservation{" +
-                "reservationId=" + reservationId +
-                ", roomId=" + roomId +
-                ", employeeId=" + employeeId +
-                ", reservationDate=" + reservationDate +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                '}';
+        return  "Reserva ID: " + reservationId + "\n" +
+                "Sala ID: " + roomId + "\n" +
+                "Empleado ID: " + employeeId + "\n" +
+                "Fecha: " + reservationDate + "\n" +
+                "Hora inicio: " + startTime + "\n" +
+                "Hora fin: " + endTime + "\n";
     }
 }

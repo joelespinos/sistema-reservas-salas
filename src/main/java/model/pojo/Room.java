@@ -94,8 +94,8 @@ public class Room {
     // toString
     @Override
     public String toString() {
-        return "Sala: " + name + " - ID: " + roomId + "\n" +
+        return  "Sala: " + name + " (ID: " + roomId + ")\n" +
                 "Capacidad: " + capacity + " personas\n" +
-                "Recursos disponibles: " + resources + "\n";
+                "Recursos: " + resources + "\n";
     }
 }

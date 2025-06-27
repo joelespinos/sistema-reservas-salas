@@ -62,7 +62,7 @@ public class EmployeeManagerView {
     private static boolean handleAddEmployee(Scanner keyboard, ReservationSystemController controller) {
         boolean isAdded = false;
         System.out.println("\n--- AGREGAR NUEVO EMPLEADO ---");
-        String dni = ReadInput.readNonEmptyString(keyboard, "el DNI del empleado", MAX_DNI_CHARS);
+        String dni = ReadInput.readDNI(keyboard, "el DNI del empleado", controller);
         String firstName = ReadInput.readNonEmptyString(keyboard, "el nombre del empleado", MAX_NAME_CHARS);
         String lastName1 = ReadInput.readNonEmptyString(keyboard, "el primer apellido del empleado", MAX_NAME_CHARS);
         String lastName2 = ReadInput.readNonEmptyString(keyboard, "el segundo apellido del empleado", MAX_NAME_CHARS);

@@ -1,5 +1,8 @@
 package utils;
 
+import controller.ReservationSystemController;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -157,5 +160,26 @@ public class ReadInput {
             }
         } while (!InputValidator.isTimeValidAccordingADate(time, reservationDate) || !InputValidator.isTimeAfterOptional(time, optionalTime));
         return time;
+    }
+
+    public static String readDNI(Scanner keyboard, String prompt, ReservationSystemController controller) {
+        String dni = "";
+
+        try {
+            do {
+                System.out.print("Ingrese " + prompt + ": ");
+                dni = keyboard.nextLine();
+
+                if (dni.isBlank()) {
+                    System.out.println("ERROR! " + prompt + " no puede estar en blanco o vacío");
+                } else if (!InputValidator.isDNIValid(dni, controller)) {
+                    System.out.println("ERROR! DNI no válido. O repetido en el sistema.");
+                }
+            } while (dni.isBlank() || !InputValidator.isDNIValid(dni, controller));
+        } catch (SQLException e) {
+            System.out.println("ERROR SQL, no se ha podido validar el DNI en el sistema");
+        }
+
+        return dni;
     }
 }

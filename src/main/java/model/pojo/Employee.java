@@ -150,15 +150,10 @@ public class Employee {
     // toString
     @Override
     public String toString() {
-        return "Employee{" +
-                "employeeId=" + employeeId +
-                ", dni='" + dni + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName1='" + lastName1 + '\'' +
-                ", lastName2='" + lastName2 + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", department='" + department + '\'' +
-                '}';
+        return  "Empleado: " + firstName + " " + lastName1 + " " + lastName2 + " (ID: " + employeeId + ")\n" +
+                "DNI: " + dni + "\n" +
+                "Teléfono: " + phoneNumber + "\n" +
+                "Email: " + email + "\n" +
+                "Departamento: " + department + "\n";
     }
 }

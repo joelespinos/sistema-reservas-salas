@@ -16,4 +16,6 @@ public interface EmployeeDAO {
     Optional<Employee> getEmployeeById(int employeeId) throws SQLException;
 
     ArrayList<Employee> getAllEmployees() throws SQLException;
+
+    boolean doesDNIExist(String dni) throws SQLException;
 }

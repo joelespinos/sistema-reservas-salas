@@ -1,5 +1,8 @@
 package utils;
 
+import controller.ReservationSystemController;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -69,5 +72,14 @@ public class InputValidator {
             return inputTime.isAfter(optionalTime.get());
         }
         return true;
+    }
+
+    public static boolean isDNIValid(String dni, ReservationSystemController controller) throws SQLException {
+        return dni.matches("[0-9]{8}[A-Za-z]")
+                && !dni.isBlank()
+                && dni.length() == 9
+                && Character.isLetter(dni.charAt(8))
+                && Character.isDigit(dni.charAt(0))
+                && !controller.doesDNIExist(dni);
     }
 }
