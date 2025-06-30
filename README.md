@@ -1,12 +1,22 @@
-# Sistema de reservas de salas
+# 💻 Sistema de reservas de salas
 
-## Descripción del proyecto
+## 📌 Descripción del proyecto
 
 Este proyecto consiste en un sistema de reservas de salas desarrollado en **Java** utilizando **Maven**. Permite gestionar salas, empleados y reservas a través de una interfaz de consola.
 
 El sistema está estructurado en capas (**controlador**, **modelo**, **utilidades** y **vistas**) para facilitar el mantenimiento y la escalabilidad.
 
-### Resumen de funcionalidades:
+### 🛠️ Tecnologías utilizadas:
+
+- **Java 23** como lenguaje de desarrollo  
+- **Maven** como herramienta de construcción (build tool)  
+- **JUnit** para la realización de pruebas unitarias  
+- **MySQL** como sistema de gestión de bases de datos  
+- **XAMPP** para mantener la conexión local con la base de datos  
+- **Git** y **GitHub** para el control de versiones  
+- **Jira** para la gestión de tareas en la metodología **Scrum**
+
+### ✅ Resumen de funcionalidades:
 
 - **Gestión de salas**: Alta, baja, modificación y consulta de salas disponibles.  
 - **Gestión de empleados**: Registro, edición, eliminación y consulta de empleados.  
@@ -16,7 +26,7 @@ El sistema está estructurado en capas (**controlador**, **modelo**, **utilidade
 
 ---
 
-## Ejecutar base de datos MySQL
+## 🗃️ Ejecutar base de datos MySQL
 
 En la estructura del proyecto encontrarás una carpeta llamada `sql` que contiene los scripts necesarios para generar la base de datos del sistema:
 
@@ -31,7 +41,7 @@ En la estructura del proyecto encontrarás una carpeta llamada `sql` que contien
 
 ---
 
-## Ejecutar el proyecto desde un IDE
+## 🧪 Ejecutar el proyecto desde un IDE
 
 Este proyecto puede ejecutarse desde cualquier entorno de desarrollo como **Eclipse**, **IntelliJ IDEA**, **VSCode**, entre otros.
 
@@ -41,4 +51,3 @@ Este proyecto puede ejecutarse desde cualquier entorno de desarrollo como **Ecli
 2. Navega a la clase `ReservationSystemMain.java`.
 3. Ejecuta esa clase.
 4. Al ejecutarse, se mostrará el **menú principal** desde donde podrás utilizar todas las funcionalidades del sistema.
-
